@@ -2,49 +2,49 @@ import java.util.Scanner;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
-enum MSG_STATUS {
-
-    READ, UNREAD;
-
-}
-
-class Message {
-
-    public String message;
-    public MSG_STATUS status;
-    public Phone caller;
-
-    Message(){
-        caller = null;
-        message = null;
-        status = MSG_STATUS.UNREAD;
-    }
-
-    Message(Phone newCaller, String newMessage){
-        caller = newCaller;
-        message = newMessage;
-        status = MSG_STATUS.UNREAD;
-    }
-
-    Phone getCaller(){
-        return caller;
-    }
-
-    String getMessage(){
-        return message;
-    }
-
-    MSG_STATUS getStatus(){
-        return status;
-    }
-
-    void setStatus(MSG_STATUS newStatus){
-        status = newStatus;
-    }
-
-}
-
 public class Landline extends OldLandline {
+
+    protected enum MSG_STATUS {
+
+        READ, UNREAD;
+    
+    }
+
+    protected class Message {
+
+        private String message;
+        private MSG_STATUS status;
+        private Phone caller;
+    
+        Message(){
+            caller = null;
+            message = null;
+            status = MSG_STATUS.UNREAD;
+        }
+    
+        Message(Phone newCaller, String newMessage){
+            caller = newCaller;
+            message = newMessage;
+            status = MSG_STATUS.UNREAD;
+        }
+    
+        Phone getCaller(){
+            return caller;
+        }
+    
+        String getMessage(){
+            return message;
+        }
+    
+        MSG_STATUS getStatus(){
+            return status;
+        }
+    
+        void setStatus(MSG_STATUS newStatus){
+            status = newStatus;
+        }
+    
+    }
 
     LinkedList<Message> messages = new LinkedList<Message>();
 
@@ -56,11 +56,21 @@ public class Landline extends OldLandline {
         super(newName, newPhoneNumber);
     }
 
+    public void readMessages(){
+        ListIterator<Message> litr = messages.listIterator();
+        System.out.println("All messages: \n");
+        while (litr.hasNext()){
+            Message curr = litr.next();
+            System.out.println(curr.getCaller().getOwner() + ": " + curr.getMessage() + "\n");
+        }
+    }
+
     public void readMessages(MSG_STATUS status){
         ListIterator<Message> litr = messages.listIterator();
-        if (status == MSG_STATUS.UNREAD)
+        if (status == MSG_STATUS.UNREAD){
             System.out.println("Unread messages: \n");
-        if (status == MSG_STATUS.READ)
+        }
+        else if (status == MSG_STATUS.READ)
             System.out.println("Read messages: \n");
         while (litr.hasNext()){
             Message curr = litr.next();
@@ -100,6 +110,7 @@ public class Landline extends OldLandline {
                     else
                         System.out.println("\nWrong input, please try again");
                 }
+                stdin.close();
             }
             else if (isBusy())
                 System.out.println(getOwner() + " cannot make calls while he/she is in another call.");

@@ -1,6 +1,6 @@
 public class PhoneNumber{
 
-    final Long phoneNumber;
+    public final Long phoneNumber;
 
     public PhoneNumber(){
         phoneNumber = 0L;

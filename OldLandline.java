@@ -1,20 +1,20 @@
 public class OldLandline implements Phone {
 
-    String name;
-    boolean isBusy;
-    PhoneNumber myNumber;
-    Phone caller;
+    protected String name;
+    protected boolean busy;
+    protected PhoneNumber myNumber;
+    protected Phone caller;
 
     public OldLandline(){
         name = "noName";
         myNumber = new PhoneNumber(9999999999L);
-        isBusy = false;
+        busy = false;
     }
     
     public OldLandline( String newName, Long newPhoneNumber){
         name = newName;
         myNumber = new PhoneNumber(newPhoneNumber);
-        isBusy = false;
+        busy = false;
     }
 
     public String getOwner(){
@@ -40,7 +40,7 @@ public class OldLandline implements Phone {
     }
 
     public void end(){
-        isBusy = false;
+        busy = false;
         caller = null;
         caller.receiveEndSignal(this);
     }
@@ -60,11 +60,11 @@ public class OldLandline implements Phone {
     }
 
     public boolean isBusy(){
-        return isBusy;
+        return busy;
     }
 
     public void receiveEndSignal(Phone from){
-        isBusy = false;
+        busy = false;
         caller = null;
     }
 
