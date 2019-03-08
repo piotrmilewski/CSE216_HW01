@@ -3,7 +3,7 @@ public class PhoneNumber{
     final Long phoneNumber;
 
     public PhoneNumber(){
-        phoneNumber = 0;
+        phoneNumber = 0L;
     }
 
     public PhoneNumber(Long newPhoneNumber) throws IllegalArgumentException{
