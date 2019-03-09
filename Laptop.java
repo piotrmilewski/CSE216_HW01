@@ -19,13 +19,13 @@ public class Laptop implements Computer {
         state = State.OFF;
     }
 
-    Laptop(String newName, String newBrand, int newScreenSize, int newRam, int newprocessorSpeeed, State newState){
+    Laptop(String newName, String newBrand, int newScreenSize, int newRam, int newprocessorSpeeed){
         brand = newBrand;
         hostname = newName + "'s " + brand + " laptop";
         screenSize = newScreenSize;
         ram = newRam;
         processorSpeeed = newprocessorSpeeed;
-        state = newState;
+        state = State.ON;
     }
 
     public String getBrand(){
@@ -76,6 +76,7 @@ public class Laptop implements Computer {
 
     public boolean hasGame(String gameName){
         if (state == State.ON){
+            Game newGame = new Game(gameName);
             for (int i = 0; i < games.size(); i++){
                 if (games.get(i).equals(newGame))
                     return true;

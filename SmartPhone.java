@@ -42,12 +42,12 @@ public class SmartPhone extends Landline implements Computer{
         state = State.OFF;
     }
 
-    public SmartPhone(String newName, Long newPhoneNumber, int newScreenSize, int newRam, int newProcessorSpeeed, State newState){
+    public SmartPhone(String newName, Long newPhoneNumber, int newScreenSize, int newRam, int newProcessorSpeeed){
         super(newName, newPhoneNumber);
         screenSize = newScreenSize;
         ram = newRam;
         processorSpeeed = newProcessorSpeeed;
-        state = newState;
+        state = State.ON;
     }
 
     public int getScreenSize(){
@@ -80,8 +80,10 @@ public class SmartPhone extends Landline implements Computer{
     public void installGame(String gameName){
         if (state == State.ON){
             Game newGame = new Game(gameName);
-            if (hasGame(gameName) == false && games.size() < MAX_SIZE)
+            if (hasGame(gameName) == false && games.size() < MAX_SIZE){
                 games.add(newGame);
+                System.out.println("Installing " + gameName + " on " + getOwner() + " smart phone.");
+            }
         }
         else{
             System.out.println("SmartPhone is currently off");
@@ -90,7 +92,8 @@ public class SmartPhone extends Landline implements Computer{
 
     public boolean hasGame(String gameName){
         if (state == State.ON){
-            for (int i = 0; i < 5; i++){
+            Game newGame = new Game(gameName);
+            for (int i = 0; i < games.size(); i++){
                 if (games.get(i).equals(newGame))
                     return true;
             }
@@ -98,6 +101,7 @@ public class SmartPhone extends Landline implements Computer{
         }
         else{
             System.out.println("SmartPhone is currently off");
+            return true; // it won't install the game in installGame()
         }
     }
 
@@ -105,6 +109,9 @@ public class SmartPhone extends Landline implements Computer{
         if (state == State.ON){
             if (hasGame(gameName)){
                 System.out.println(getOwner() + " is playing " + gameName);
+            }
+            else{
+                System.out.println("Cannot play " + gameName + " on " + getOwner() + "'s smart phone. Install it first.");
             }
         }
         else{

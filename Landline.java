@@ -1,4 +1,4 @@
-import java.util.Scanner;
+import java.io.*;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
@@ -80,47 +80,28 @@ public class Landline extends OldLandline {
         }
     }
 
-    @Override
-    public void call(Phone phone){
-        if (phone.isBusy() || isBusy()){
-            if (phone.isBusy()){
-                Scanner stdin = new Scanner(System.in);
+    public void leaveMessage(Phone from) throws IOException{
+        InputStreamReader inStream = new InputStreamReader(System.in);
+        BufferedReader stdin = new BufferedReader(inStream);
 
-                System.out.println(getOwner() + " is unable to call " + phone.getOwner() + ". Line is currently busy.");
+        //LOOP FOR ADDING A MESSAGE
+        boolean run = true;
+        while (run){
+            System.out.print("Does " + from.getOwner() + " want to leave a message? [y/n] ");
 
-                //LOOP FOR ADDING A MESSAGE
-                boolean run = true;
-                while (run){
-                    System.out.print("Does" + getOwner() + "want to leave a message? [y/n]");
-
-                    String input = stdin.nextLine();
-                    String[] newInput = input.split(" ");
-                    if (newInput[0].equals("y") && newInput.length == 1){
-                        System.out.print("\n");
-                        input = stdin.nextLine();
-                        Message newMessage = new Message(this, input);
-                        messages.add(newMessage);
-                        System.out.print("\n");
-                        run = false;
-                    }
-                    else if (newInput[0].equals("n") && newInput.length == 1){
-                        System.out.print("\n");
-                        run = false;
-                    }
-                    else
-                        System.out.println("\nWrong input, please try again");
-                }
-                stdin.close();
+            String input = stdin.readLine();
+            String[] newInput = input.split(" ");
+            if (newInput[0].equals("y") && newInput.length == 1){
+                input = stdin.readLine();
+                Message newMessage = new Message(this, input);
+                messages.add(newMessage);
+                run = false;
             }
-            else if (isBusy())
-                System.out.println(getOwner() + " cannot make calls while he/she is in another call.");
+            else if (newInput[0].equals("n") && newInput.length == 1){
+                run = false;
+            }
             else
-                System.out.println(getOwner() + " and " + phone.getOwner() + " are both currently in a call");
+                System.out.println("\nWrong input, please try again");
         }
-        else{
-            caller = phone;
-            System.out.println(getOwner() + " is on the phone with " + phone.getOwner());
-            phone.receive(this);
-        }  
     }
 }
