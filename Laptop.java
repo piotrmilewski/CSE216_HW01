@@ -10,9 +10,12 @@ public class Laptop implements Computer {
     private int processorSpeeed;
     private State state;
 
-    LinkedList<Game> games = new LinkedList<Game>();
+    LinkedList<SmartPhone.Game> games = new LinkedList<SmartPhone.Game>();
 
     Laptop(){
+        name = "";
+        brand = "";
+        hostname = "";
         screenSize = 0;
         ram = 0;
         processorSpeeed = 0;
@@ -20,12 +23,17 @@ public class Laptop implements Computer {
     }
 
     Laptop(String newName, String newBrand, int newScreenSize, int newRam, int newprocessorSpeeed){
+        name = newName;
         brand = newBrand;
         hostname = newName + "'s " + brand + " laptop";
         screenSize = newScreenSize;
         ram = newRam;
         processorSpeeed = newprocessorSpeeed;
         state = State.ON;
+    }
+
+    public String getOwner(){
+        return name;
     }
 
     public String getBrand(){
@@ -65,37 +73,49 @@ public class Laptop implements Computer {
 
     public void installGame(String gameName){
         if (state == State.ON){
-            Game newGame = new Game(gameName);
-            if (hasGame(gameName) == false)
+            SmartPhone.Game newGame = new SmartPhone.Game(gameName);
+            if (hasGame(gameName) == false){
                 games.add(newGame);
+                System.out.println("Installing " + gameName + " on " + getOwner() + " laptop.");
+            }
+            else{
+                System.out.println("Can't install " + gameName + " on " + getOwner() + "'s laptop.");
+            }
         }
         else{
-            System.out.println("SmartPhone is currently off");
+            System.out.println("SmartPhone is currently off.");
         }
     }
 
     public boolean hasGame(String gameName){
         if (state == State.ON){
-            Game newGame = new Game(gameName);
+            SmartPhone.Game newGame = new SmartPhone.Game(gameName);
             for (int i = 0; i < games.size(); i++){
-                if (games.get(i).equals(newGame))
+                if (games.get(i).equals(newGame)){
+                    System.out.println(getOwner() + " has " + gameName + " installed.");
                     return true;
+                }
             }
+            System.out.println(getOwner() + " doesn't have " + gameName + " installed.");
             return false;
         }
         else{
-            System.out.println("SmartPhone is currently off");
+            System.out.println("SmartPhone is currently off.");
+            return true; // it won't install the game in installGame()
         }
     }
 
     public void playGame(String gameName){
         if (state == State.ON){
             if (hasGame(gameName)){
-                System.out.println(getOwner() + " is playing " + gameName);
+                System.out.println(getOwner() + " is playing " + gameName + ".");
+            }
+            else{
+                System.out.println("Cannot play " + gameName + " on " + getOwner() + "'s laptop.");
             }
         }
         else{
-            System.out.println("SmartPhone is currently off");
+            System.out.println("SmartPhone is currently off.");
         }
     }
 

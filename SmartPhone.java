@@ -2,7 +2,7 @@ import java.util.LinkedList;
 
 public class SmartPhone extends Landline implements Computer{
 
-    protected class Game {
+    protected static class Game {
 
         String name;
     
@@ -82,11 +82,14 @@ public class SmartPhone extends Landline implements Computer{
             Game newGame = new Game(gameName);
             if (hasGame(gameName) == false && games.size() < MAX_SIZE){
                 games.add(newGame);
-                System.out.println("Installing " + gameName + " on " + getOwner() + " smart phone.");
+                System.out.println("Installing " + gameName + " on " + getOwner() + "'s smart phone.");
+            }
+            else{
+                System.out.println("Can't install " + gameName + " on " + getOwner() + "'s smart phone.");
             }
         }
         else{
-            System.out.println("SmartPhone is currently off");
+            System.out.println("SmartPhone is currently off.");
         }
     }
 
@@ -94,13 +97,16 @@ public class SmartPhone extends Landline implements Computer{
         if (state == State.ON){
             Game newGame = new Game(gameName);
             for (int i = 0; i < games.size(); i++){
-                if (games.get(i).equals(newGame))
+                if (games.get(i).equals(newGame)){
+                    System.out.println(getOwner() + " has " + gameName + " installed.");
                     return true;
+                }
             }
+            System.out.println(getOwner() + " doesn't have " + gameName + " installed.");
             return false;
         }
         else{
-            System.out.println("SmartPhone is currently off");
+            System.out.println("SmartPhone is currently off.");
             return true; // it won't install the game in installGame()
         }
     }
@@ -108,14 +114,14 @@ public class SmartPhone extends Landline implements Computer{
     public void playGame(String gameName){
         if (state == State.ON){
             if (hasGame(gameName)){
-                System.out.println(getOwner() + " is playing " + gameName);
+                System.out.println(getOwner() + " is playing " + gameName + ".");
             }
             else{
-                System.out.println("Cannot play " + gameName + " on " + getOwner() + "'s smart phone. Install it first.");
+                System.out.println("Cannot play " + gameName + " on " + getOwner() + "'s smart phone.");
             }
         }
         else{
-            System.out.println("SmartPhone is currently off");
+            System.out.println("SmartPhone is currently off.");
         }
     }
 

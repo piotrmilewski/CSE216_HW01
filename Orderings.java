@@ -48,16 +48,16 @@ public class Orderings{
 
         @Override
         public int compare(Computer c1, Computer c2){
-            String cBrand1 = c1.getBrand();
-            String cBrand2 = c2.getBrand();
 
-            if (cBrand1 == null && cBrand2 == null)
+            if (c1 instanceof SmartPhone && c2 instanceof SmartPhone)
                 return 0;
-            else if (cBrand1 == null && cBrand2 != null)
+            else if (c1 instanceof Laptop && c2 instanceof SmartPhone)
                 return -1;
-            else if (cBrand1 != null && cBrand2 == null)
+            else if (c1 instanceof SmartPhone && c2 instanceof Laptop)
                 return 1;
             else{
+                String cBrand1 = ((Laptop)c1).getBrand();
+                String cBrand2 = ((Laptop)c2).getBrand();
                 if (cBrand1.compareToIgnoreCase(cBrand2) > 0)
                     return 1;
                 else if (cBrand1.compareToIgnoreCase(cBrand2) < 0)

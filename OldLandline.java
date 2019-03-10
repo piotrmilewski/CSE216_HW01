@@ -51,10 +51,15 @@ public class OldLandline implements Phone {
     }
 
     public void end(){
-        System.out.println(getOwner() + " has ended the call to " + caller.getOwner());
-        busy = false;
-        caller.receiveEndSignal(this);
-        caller = null;
+        if (isBusy()){
+            System.out.println(getOwner() + " has ended the call to " + caller.getOwner());
+            busy = false;
+            caller.receiveEndSignal(this);
+            caller = null;
+        }
+        else{
+            System.out.println(getOwner() + " is not in a call right now.");
+        }
     }
 
     public void receive(Phone from){
